@@ -6,15 +6,15 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#FFFFFFFF"
-        android:textColor="#FFCCCCCC"
+        android:backgroundTint="#FFFFFFFF"
+        android:textColor="#FF000000"
         android:text="버튼1"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#FFFFDD00"
-        android:textColor="#FFCCCCCC"
+        android:backgroundTint="#FFFFDD00"
+        android:textColor="#FF000000"
         android:layout_margin="30dp"
         android:text="버튼2"/>
 
