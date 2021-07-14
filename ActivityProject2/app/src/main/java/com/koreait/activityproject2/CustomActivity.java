@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 //템플릿을 선택하여 Activity생성시 AndroidManifest.xml 파일에 자동등록 + xml 레이아웃파일 자동 생성
 public class CustomActivity extends AppCompatActivity {
@@ -27,11 +28,20 @@ public class CustomActivity extends AppCompatActivity {
 
         //지금부터는 디자인을 xml했기 때문에, 해당  xml에 명시한 뷰들을 실제 자바의 인스턴스화 시켜야 한다..(인플레이션 시키자)
         LayoutInflater layoutInflater=this.getLayoutInflater(); //인스턴스 얻기!
-        //board_item.xml의 가장 바깥쪽 LinearLayout을 반환 받음!!
-        LinearLayout view=(LinearLayout) layoutInflater.inflate(R.layout.board_item, null, false); //그냥 인플레이션 시킨 후 결과 View를 받자
+        String[] title={"바바리안","배트맨","스캇","데드풀","헐크","아이언맨","스파이더맨","울버린","원더우먼","매그니토"};
 
-        //activity_custom.xml의 LinearLayout 에 부착하자!!!
-        container.addView(view);
+        for(int i=0;i<10;i++) {
+            //board_item.xml의 가장 바깥쪽 LinearLayout을 반환 받음!!
+            LinearLayout view = (LinearLayout) layoutInflater.inflate(R.layout.board_item, null, false); //그냥 인플레이션 시킨 후 결과 View를 받자
+
+            //뷰그룹도 findViewById 메서드가 지원된다!!
+            TextView t_title = (TextView)view.findViewById(R.id.t_title);
+            TextView t_writer = (TextView)view.findViewById(R.id.t_writer);
+
+            t_title.setText(title[i]);
+
+            container.addView(view);//activity_custom.xml의 LinearLayout 에 부착하자!!!
+        }
     }
 }
 
