@@ -1,0 +1,2 @@
+rootProject.name = "ActivityProject2"
+include ':app'
