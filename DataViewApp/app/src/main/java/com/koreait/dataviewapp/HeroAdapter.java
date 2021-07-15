@@ -3,6 +3,8 @@ package com.koreait.dataviewapp;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,18 +19,31 @@ public class HeroAdapter extends BaseAdapter {
     Context context;
     //보여질 데이터 준비 (추후 이 데이터는 공공데이터 포털이나, 우리의 웹서버로부터 가져올예정)
     String[] writerArray={"바바리안","배트맨","빔","데드풀","헐크","아이언맨","매그니토","스파이더맨","울버린","원더우먼"};//작성자 배열
-
+    int[] drawables={
+            R.drawable.babarian,
+            R.drawable.batman,
+            R.drawable.beam,
+            R.drawable.deadpool,
+            R.drawable.hulk,
+            R.drawable.iron,
+            R.drawable.magni,
+            R.drawable.spider,
+            R.drawable.wolf,
+            R.drawable.woman
+    };
+    Resources res;
 
     //생성자에서 Activity를 이용하자!!
     public HeroAdapter(Context context) {
         this.context=context;
         Activity ac=(Activity)context;
         layoutInflater = ac.getLayoutInflater();
+        res=context.getResources();
     }
 
     //총 아이템 갯수 반환
     public int getCount() {
-        return 3;
+        return writerArray.length;
     }
 
     //지정한 위치의 아이템 반환
@@ -48,7 +63,9 @@ public class HeroAdapter extends BaseAdapter {
 
         ImageView img=(ImageView)view.findViewById(R.id.img);
         TextView t_writer = (TextView)view.findViewById(R.id.t_writer);
-        img.set
+        //이미지는 drawable에 있으므로, drawable안의 리소스를 접근할수 있어야 한다..
+        Drawable d=res.getDrawable(drawables[position]);
+        img.setImageDrawable(d);
         t_writer.setText(writerArray[position]);
 
         return view;
