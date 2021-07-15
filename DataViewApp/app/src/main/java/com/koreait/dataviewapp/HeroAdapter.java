@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,7 @@ public class HeroAdapter extends BaseAdapter {
 
     //총 아이템 갯수 반환
     public int getCount() {
+        Log.d("HeroAdapter", "총 데이터 갯수는 "+writerArray.length);
         return writerArray.length;
     }
 
@@ -58,6 +60,8 @@ public class HeroAdapter extends BaseAdapter {
 
     //swing의 TableModel 에서의 getValueAt() 과 역할
     public View getView(int position, View convertView, ViewGroup parent) {
+
+
         //아이템으로 사용할 뷰를 반환하자!!(우리의 경우 item_board 의 인플레이션 결과물...)
         View view=layoutInflater.inflate(R.layout.item_board, null, false);
 
