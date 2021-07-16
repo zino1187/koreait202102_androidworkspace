@@ -8,8 +8,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
     MyCanvas myCanvas;
+    Thread thread; //자동 에니메이션 구현을 위한 쓰레드
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,15 +25,50 @@ public class MainActivity extends AppCompatActivity {
         * 그래픽스타일: swing: Graphics ,  onDraw(?)
         * 그래픽대상 : swing:  컴포넌트, andriod:View
         * */
+        thread = new Thread(){
+            public void run() {
+                //에니메이션 구현!!!
+                while(true) {
+                    move();
+                    try {
+                        Thread.sleep(10);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+
+    }
+
+    public void move(){
+        //커스텀뷰의 x,y 값을 변경시키고, repaint() 메서드 명칭 틀림
+        myCanvas.x+=1;
+        myCanvas.y+=1;
+        myCanvas.invalidate();
     }
     //xml에서 onClick 등으로 인한 호출시엔, 반드시 메서드에 View를 매개변수로 선언해야  xml에서 호출한 메서드로
     //인정해준다..
-    public void move(View view){
+    public void manual(View view){
         Log.d("MainActivity",  "버튼 눌렀어?");
-        //커스텀뷰의 x,y 값을 변경시키고, repaint() 메서드 명칭 틀림
-        myCanvas.x+=10;
-        myCanvas.y+=10;
-        myCanvas.invalidate();
-
+        move();
     }
+
+    public void auto(View view){
+        thread.start();
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
