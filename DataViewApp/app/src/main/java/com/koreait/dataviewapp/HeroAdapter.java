@@ -44,7 +44,7 @@ public class HeroAdapter extends BaseAdapter {
 
     //총 아이템 갯수 반환
     public int getCount() {
-        Log.d("HeroAdapter", "총 데이터 갯수는 "+writerArray.length);
+        //Log.d("HeroAdapter", "총 데이터 갯수는 "+writerArray.length);
         return writerArray.length;
     }
 
@@ -61,9 +61,15 @@ public class HeroAdapter extends BaseAdapter {
     //swing의 TableModel 에서의 getValueAt() 과 역할
     public View getView(int position, View convertView, ViewGroup parent) {
 
-
-        //아이템으로 사용할 뷰를 반환하자!!(우리의 경우 item_board 의 인플레이션 결과물...)
-        View view=layoutInflater.inflate(R.layout.item_board, null, false);
+        //대체될 뷰가 없다면 즉 convertView가  null이라면 생성하고, null이 아니라면 기존의 뷰를 재사용하자!!
+        View view=null;
+        if(convertView==null){
+            //아이템으로 사용할 뷰를 반환하자!!(우리의 경우 item_board 의 인플레이션 결과물...)
+            view=layoutInflater.inflate(R.layout.item_board, null, false);
+        }else{
+            view=convertView;
+        }
+        Log.d("HeroAdapter", "view:"+view+",convertView:"+convertView);
 
         ImageView img=(ImageView)view.findViewById(R.id.img);
         TextView t_writer = (TextView)view.findViewById(R.id.t_writer);
