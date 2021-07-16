@@ -30,7 +30,7 @@ public class PhotoActivity extends AppCompatActivity implements View.OnClickList
         if(v.equals(bt_prev)){
             photoView.index--;
         }else if(v.equals(bt_auto)){
-            
+
         }else if(v.equals(bt_next)){
             photoView.index++;
         }
