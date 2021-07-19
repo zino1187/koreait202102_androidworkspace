@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<members>
+    <member>
+        <name>유재석</name>
+        <phone>010-2222-3333</phone>
+        <addr>한남동</addr>
+    </member>
+    <member>
+        <name>박명수</name>
+        <phone>010-5555-6666</phone>
+        <addr>압구정동</addr>
+    </member>
+    <member>
+        <name>하하</name>
+        <phone>010-7777-9999</phone>
+        <addr>청담동</addr>
+    </member>
+
+</members>
