@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<members>
+    <member>
+        <name>하하</name>
+        <phone>01028679099</phone>
+        <age>40</age>
+    </member>
+    <member>
+        <name>유재석</name>
+        <phone>01055553333</phone>
+        <age>50</age>
+    </member>
+    <member>
+        <name>정준하</name>
+        <phone>010-1111-5353</phone>
+        <age>53</age>
+    </member>
+</members>

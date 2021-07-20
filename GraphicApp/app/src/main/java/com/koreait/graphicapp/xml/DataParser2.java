@@ -1,2 +1,7 @@
-package com.koreait.graphicapp.xml;public class DataParser2 {
+package com.koreait.graphicapp.xml;
+
+import org.xml.sax.helpers.DefaultHandler;
+
+public class DataParser2 extends DefaultHandler {
+
 }
