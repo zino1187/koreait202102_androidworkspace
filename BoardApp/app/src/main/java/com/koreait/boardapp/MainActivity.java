@@ -1,0 +1,61 @@
+package com.koreait.boardapp;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager2.widget.ViewPager2;
+
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+
+
+public class MainActivity extends AppCompatActivity {
+    Toolbar toolbar;
+    ViewPager2 viewPager;
+    PageAdapter pageAdapter;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        toolbar = findViewById(R.id.toolbar);
+        viewPager = findViewById(R.id.viewPager);
+        pageAdapter = new PageAdapter(this); //어댑터 생성
+        viewPager.setAdapter(pageAdapter);
+
+        this.setSupportActionBar(toolbar);
+    }
+
+    //앱바 영역에 툴바를 이용한 메뉴구성하기
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        this.getMenuInflater().inflate(R.menu.main_navi, menu);
+        return true;
+    }
+
+    public void showPage(int index){
+        //viewPager.setCurrentItem(index);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.item_list:showPage(0);break;
+            case R.id.item_write:showPage(1);break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+}
+
+
+
+
+
+
+
+
+
+
