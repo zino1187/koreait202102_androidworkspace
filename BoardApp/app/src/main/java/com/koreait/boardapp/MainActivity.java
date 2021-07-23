@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("MainActivity", "MainActivity의 주소값은 "+this);
         setContentView(R.layout.activity_main);
 
         toolbar = findViewById(R.id.toolbar);
@@ -26,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(pageAdapter);
 
         this.setSupportActionBar(toolbar);
+
+        showPage(2);//상세보기 페이지
     }
 
     //앱바 영역에 툴바를 이용한 메뉴구성하기
@@ -37,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showPage(int index){
-        //viewPager.setCurrentItem(index);
+        viewPager.setCurrentItem(index);
     }
 
     @Override
