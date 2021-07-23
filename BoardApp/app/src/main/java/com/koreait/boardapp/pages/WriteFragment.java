@@ -1,12 +1,16 @@
 package com.koreait.boardapp.pages;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.koreait.boardapp.MainActivity;
@@ -23,6 +27,7 @@ public class WriteFragment extends Fragment implements View.OnClickListener {
     String TAG=this.getClass().getName();
     Button bt_list, bt_write;
     MainActivity mainActivity;
+    Handler handler;
 
     //반환값이 View는, 현재의 프레그먼트에서 보여줄 뷰를 의미
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,6 +38,18 @@ public class WriteFragment extends Fragment implements View.OnClickListener {
         bt_list.setOnClickListener(this);
         bt_write.setOnClickListener(this);
         mainActivity = (MainActivity) this.getActivity(); //호스트 액티비티 얻어다 놓기
+
+        handler = new Handler(){
+            public void handleMessage(@NonNull Message message) {
+                //메인쓰레드에 의해 제어할 영역
+                AlertDialog.Builder builder=new AlertDialog.Builder(mainActivity);
+                builder.setTitle("등록결과");
+                Bundle bundle=message.getData();
+
+                builder.setMessage(bundle.getString("msg"));
+                builder.show();
+            }
+        };
 
         return view;
     }
@@ -64,6 +81,19 @@ public class WriteFragment extends Fragment implements View.OnClickListener {
 
             int code=con.getResponseCode(); //서버의 응답코드 200 등등
             Log.d("WriteFragment","등록후 결과 코드"+code);
+
+            String msg="";
+            if(code==200){
+                msg="등록성공";
+            }else{
+                msg="등록실패";
+            }
+            Message message = new Message();
+            Bundle bundle = new Bundle();
+            bundle.putString("msg",msg);
+            message.setData(bundle);
+            handler.sendMessage(message);
+
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -89,7 +119,15 @@ public class WriteFragment extends Fragment implements View.OnClickListener {
             mainActivity.showPage(0);
         }else if(v.getId() == R.id.bt_write){
             Log.d(TAG, "등록할까요?");
+
+            Thread thread=new Thread(){
+                public void run() {
+                    regist();
+                }
+            };
+            thread.start();
         }
+
     }
 
 }

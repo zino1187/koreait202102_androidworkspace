@@ -18,7 +18,7 @@
 
     <EditText
         android:inputType="textMultiLine"
-        android:lines="25"
+        android:lines="22"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="내용을 입력하세요"
