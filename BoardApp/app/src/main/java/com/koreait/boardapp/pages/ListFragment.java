@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.koreait.boardapp.BoardDAO;
 import com.koreait.boardapp.MainActivity;
 import com.koreait.boardapp.R;
 import com.koreait.boardapp.list.BoardListAdapter;
@@ -24,6 +25,7 @@ import java.net.URL;
 public class ListFragment extends Fragment {
     ListView listView;
     BoardListAdapter boardListAdapter;
+    BoardDAO boardDAO;
 
     @Override
     //반환값이 View는, 현재의 프레그먼트에서 보여줄 뷰를 의미
@@ -34,30 +36,18 @@ public class ListFragment extends Fragment {
         //리스트뷰와 어댑터 연결
         boardListAdapter = new BoardListAdapter((MainActivity) this.getActivity());
         listView.setAdapter(boardListAdapter);
+        boardDAO = new BoardDAO();
 
-        //매요청마다 사용될 쓰레드 정의
+        Thread thread = new Thread(){
+            public void run() {
+                boardDAO.getList();
+            }
+        };
+        thread.start();
 
         return view;
     }
 
-    //웹서버로부터 데이터 가져오기
-    public void getList(){
-        URL url=null;
-        HttpURLConnection con=null;
-        BufferedReader buffr=null;
-
-        try {
-            url=new URL("http://172.30.1.53:8888/rest/board");
-            con=(HttpURLConnection) url.openConnection();
-            con.setRequestMethod("get");
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
 }
 
 
