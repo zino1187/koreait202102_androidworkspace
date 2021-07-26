@@ -5,6 +5,7 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/t_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="제목: 글의 제목이 나올곳"/>
@@ -15,17 +16,21 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/t_writer"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="작성자:홍길동"/>
+
         <TextView
+            android:id="@+id/t_regdate"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="등록일:2021-07-25"/>
 
         <TextView
+            android:id="@+id/t_hit"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"

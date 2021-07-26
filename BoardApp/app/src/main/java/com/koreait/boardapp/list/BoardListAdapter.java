@@ -5,14 +5,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import com.koreait.boardapp.MainActivity;
 import com.koreait.boardapp.R;
+import com.koreait.boardapp.domain.Board;
+
+import java.util.ArrayList;
+import java.util.List;
 
 //ListView 가 보여줄 게시물 목록에 대한 정보를 제공하는 어댑터
 public class BoardListAdapter extends BaseAdapter {
     MainActivity mainActivity;
     LayoutInflater layoutInflater;
+    public List<Board> boardList=new ArrayList<Board>();
 
     public BoardListAdapter(MainActivity mainActivity) {
         this.mainActivity=mainActivity;
@@ -21,12 +27,12 @@ public class BoardListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 10;
+        return boardList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return boardList.get(position);
     }
 
     @Override
@@ -43,8 +49,21 @@ public class BoardListAdapter extends BaseAdapter {
         if(convertView==null) {
             view = layoutInflater.inflate(R.layout.item_board, null, false); //새로운 뷰 생성
         }else{
-           view=convertView; //기존 뷰로 대체
+            view=convertView; //기존 뷰로 대체
         }
+        //인플레이션 완료 후 반환된 그룹뷰는 각각 자기가 포함하고 있는 자식요소들을 접근하여 알맞는 데이터를
+        //채워넣으면 된다..
+        TextView t_title=view.findViewById(R.id.t_title);
+        TextView t_writer=view.findViewById(R.id.t_writer);
+        TextView t_regdate=view.findViewById(R.id.t_regdate);
+        TextView t_hit=view.findViewById(R.id.t_hit);
+
+        Board board=boardList.get(position); //ArrayList에 들어있는 VO꺼내기!!
+
+        t_title.setText(board.getTitle());
+        t_writer.setText(board.getWriter());
+        t_regdate.setText(board.getRegdate());
+        t_hit.setText(Integer.toString(board.getHit()));
 
         return view;
     }

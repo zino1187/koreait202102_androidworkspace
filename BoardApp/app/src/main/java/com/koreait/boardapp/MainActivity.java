@@ -10,11 +10,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.koreait.boardapp.pages.ListFragment;
+
 
 public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     ViewPager2 viewPager;
     PageAdapter pageAdapter;
+    BoardDAO boardDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,11 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(pageAdapter);
 
         this.setSupportActionBar(toolbar);
+        boardDAO = new BoardDAO();
+
+        //각 프레그먼트 접근하기
+        ListFragment listFragment=(ListFragment) pageAdapter.pages[0];
+        //listFragment.boardListAdapter
 
         showPage(2);//상세보기 페이지
     }

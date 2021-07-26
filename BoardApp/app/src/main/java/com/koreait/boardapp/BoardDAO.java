@@ -41,6 +41,8 @@ public class BoardDAO {
 
             Log.d(TAG, "code="+code);
             Log.d(TAG, "sb="+sb.toString());
+            //여기서 서버로부터 전송된, json을 ListView에 반영하기!!!(실제적으론 BaseAdapter제어)
+
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
