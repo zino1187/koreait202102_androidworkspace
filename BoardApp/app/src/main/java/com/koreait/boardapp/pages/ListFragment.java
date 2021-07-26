@@ -55,7 +55,7 @@ public class ListFragment extends Fragment {
         //핸들러 정의
         handler = new Handler(){
             public void handleMessage(@NonNull Message msg) {
-                boardListAdapter.notifyDataSetChanged();//새로고침!!
+                boardListAdapter.notifyDataSetChanged();
                 listView.invalidate();
             }
         };

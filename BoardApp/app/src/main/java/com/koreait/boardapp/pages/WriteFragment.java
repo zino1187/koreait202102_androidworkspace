@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -26,8 +27,11 @@ import java.net.URL;
 public class WriteFragment extends Fragment implements View.OnClickListener {
     String TAG=this.getClass().getName();
     Button bt_list, bt_write;
+    EditText t_title, t_writer, t_content;
     MainActivity mainActivity;
     Handler handler;
+    String ip="172.30.1.53";
+    int port=8888;
 
     //반환값이 View는, 현재의 프레그먼트에서 보여줄 뷰를 의미
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -35,6 +39,10 @@ public class WriteFragment extends Fragment implements View.OnClickListener {
         //버튼과 리스너와의 연결
         bt_list = view.findViewById(R.id.bt_list);
         bt_write = view.findViewById(R.id.bt_write);
+        t_title=view.findViewById(R.id.t_title);
+        t_writer=view.findViewById(R.id.t_writer);
+        t_content=view.findViewById(R.id.t_content);
+
         bt_list.setOnClickListener(this);
         bt_write.setOnClickListener(this);
         mainActivity = (MainActivity) this.getActivity(); //호스트 액티비티 얻어다 놓기
@@ -60,7 +68,7 @@ public class WriteFragment extends Fragment implements View.OnClickListener {
         BufferedWriter buffw=null;
 
         try {
-            url=new URL("http://192.168.55.227:8888/client/cs/board/regist");
+            url=new URL("http://"+ip+":"+port+"/rest/board");
             con=(HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");//요청 방법 지정(post, get ... )
             con.setRequestProperty("Content-Type","application/json;charset=utf-8");
@@ -69,9 +77,9 @@ public class WriteFragment extends Fragment implements View.OnClickListener {
             //string형으로 서버에 json문자열을 전송하자!!
             StringBuilder sb = new StringBuilder();
             sb.append("{");
-            sb.append("\"title\":\"안드로이드제목\",");
-            sb.append("\"writer\":\"홍길동\",");
-            sb.append("\"content\":\"내용없슴\"");
+            sb.append("\"title\":\""+t_title.getText().toString()+"\",");
+            sb.append("\"writer\":\""+t_writer.getText()+"\",");
+            sb.append("\"content\":\""+t_content.getText()+"\"");
             sb.append("}");
 
             //con객체로부터 스트림을 뽑은후, 데이터 출력
