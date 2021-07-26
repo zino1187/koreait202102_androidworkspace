@@ -30,8 +30,11 @@ public class MainActivity extends AppCompatActivity {
         pageAdapter = new PageAdapter(this); //어댑터 생성
         viewPager.setAdapter(pageAdapter);
 
+        //viewPager2의 경우 메서드 호출로 스와이핑을 scroll을 비활성화 시킬수 있을 듯..
+        viewPager.setUserInputEnabled(false);
+
         this.setSupportActionBar(toolbar);
-        boardDAO = new BoardDAO();
+
 
         //각 프레그먼트 접근하기
         ListFragment listFragment=(ListFragment) pageAdapter.pages[0];

@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -67,6 +68,15 @@ public class ListFragment extends Fragment {
             }
         };
         thread.start();
+
+        //리스트뷰와 이벤트 리스너연결
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d(TAG, "아이템 선택했어?");
+                MainActivity mainActivity=(MainActivity) ListFragment.this.getActivity();
+                mainActivity.showPage(2);
+            }
+        });
 
         return view;
     }
