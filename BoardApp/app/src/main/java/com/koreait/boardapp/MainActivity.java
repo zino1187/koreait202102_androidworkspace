@@ -19,7 +19,7 @@ import com.koreait.boardapp.pages.WriteFragment;
 
 public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
-    Fragment[] pages= new Fragment[3];
+    public Fragment[] pages= new Fragment[3];
     ViewPager2 viewPager;
     PageAdapter pageAdapter;
     public Board board;

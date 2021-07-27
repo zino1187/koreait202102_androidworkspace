@@ -62,7 +62,7 @@ public class ListFragment extends Fragment {
                 //리스트인 경우에...
                 if(msg.equals("list")) {
                     boardListAdapter.notifyDataSetChanged();
-                    listView.invalidate();
+                    listView.invalidateViews(); // 교체!!!
                 }else if(msg.equals("detail")) {
                     //상세보기인 경우에..
                     MainActivity mainActivity=(MainActivity) ListFragment.this.getActivity();

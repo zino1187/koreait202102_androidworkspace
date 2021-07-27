@@ -90,6 +90,7 @@ public class ContentFragment extends Fragment {
                 builder.show();
 
                 if(bundle.get("msg").equals("삭제성공")){
+                    //
                     mainActivity.showPage(0);
                 }
             }
@@ -114,9 +115,12 @@ public class ContentFragment extends Fragment {
             String msg="";
             if(code==200){
                 msg="삭제성공";
+                ListFragment listFragment=(ListFragment)mainActivity.pages[0];
+                listFragment.getList();
             }else{
                 msg="삭제실패";
             }
+
             Message message = new Message();
             Bundle bundle = new Bundle();
             bundle.putString("msg",msg);
