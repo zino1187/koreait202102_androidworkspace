@@ -1,6 +1,7 @@
 package com.koreait.boardapp.pages;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.koreait.boardapp.MainActivity;
@@ -34,6 +37,7 @@ public class ContentFragment extends Fragment {
     Button bt_list, bt_update, bt_delete;
     String ip="172.30.1.53";
     int port=8888;
+    Handler handler;
 
     @Override
     //반환값이 View는, 현재의 프레그먼트에서 보여줄 뷰를 의미
@@ -58,11 +62,79 @@ public class ContentFragment extends Fragment {
         });
         bt_update.setOnClickListener((View v)->{
             Log.d(TAG, "람다로 작동성공");
+            Thread thread = new Thread(){
+                public void run() {
+                    update();
+                }
+            };
+            thread.start();
         });
+
         bt_delete.setOnClickListener((View v)->{
-            Log.d(TAG, "람다로 작동성공");
+            Thread thread = new Thread(){
+                public void run() {
+                    del();
+                }
+            };
+            thread.start();
         });
+
+        handler = new Handler(){
+            public void handleMessage(@NonNull Message message) {
+                //메인쓰레드에 의해 제어할 영역
+                AlertDialog.Builder builder=new AlertDialog.Builder(mainActivity);
+                builder.setTitle("처리결과");
+                Bundle bundle=message.getData();
+
+                builder.setMessage(bundle.getString("msg"));
+                builder.show();
+
+                if(bundle.get("msg").equals("삭제성공")){
+                    mainActivity.showPage(0);
+                }
+            }
+        };
+
         return view;
+    }
+
+
+    public void del(){
+        URL url=null;
+        HttpURLConnection con=null;
+        BufferedWriter buffw=null;
+
+        try {
+            url=new URL("http://"+ip+":"+port+"/rest/board/"+mainActivity.board.getBoard_id());
+            con=(HttpURLConnection) url.openConnection();
+            con.setRequestMethod("DELETE");//요청 방법 지정(post, get ... )
+            int code=con.getResponseCode(); //서버의 응답코드 200 등등
+            Log.d(TAG,"삭제 후 결과 코드"+code);
+
+            String msg="";
+            if(code==200){
+                msg="삭제성공";
+            }else{
+                msg="삭제실패";
+            }
+            Message message = new Message();
+            Bundle bundle = new Bundle();
+            bundle.putString("msg",msg);
+            message.setData(bundle);
+            handler.sendMessage(message);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally{
+            if(buffw!=null){
+                try {
+                    buffw.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     public void update(){
@@ -84,6 +156,7 @@ public class ContentFragment extends Fragment {
             sb.append("\"title\":\""+t_title.getText().toString()+"\",");
             sb.append("\"writer\":\""+t_writer.getText()+"\",");
             sb.append("\"content\":\""+t_content.getText()+"\"");
+            //sb.append("\"_method\":\"put\"");
             sb.append("}");
 
             //con객체로부터 스트림을 뽑은후, 데이터 출력
@@ -92,7 +165,7 @@ public class ContentFragment extends Fragment {
             buffw.flush();
 
             int code=con.getResponseCode(); //서버의 응답코드 200 등등
-            Log.d("WriteFragment","수정 후 결과 코드"+code);
+            Log.d(TAG,"수정 후 결과 코드"+code);
 
             String msg="";
             if(code==200){
@@ -104,7 +177,7 @@ public class ContentFragment extends Fragment {
             Bundle bundle = new Bundle();
             bundle.putString("msg",msg);
             message.setData(bundle);
-            //handler.sendMessage(message);
+            handler.sendMessage(message);
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
