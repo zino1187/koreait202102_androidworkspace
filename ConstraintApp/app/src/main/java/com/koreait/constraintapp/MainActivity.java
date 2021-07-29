@@ -35,15 +35,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.gallery);
+        setContentView(R.layout.lottie);
         imgView=findViewById(R.id.imgView);
 
         //createInternal();//내부 저장소에 메모장 파일 만들기!!
         //readInternal();
 
-        checkPermission();
+        //checkPermission();
         //readExternal();
-        readExternal();
+        //readExternal();
     }
 
     //권한 요청 팝업에 대한 사용자의 선택결과를 받는 메서드!
